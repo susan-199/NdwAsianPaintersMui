@@ -1,6 +1,12 @@
+/* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Input from '../../components/Input/input';
+import Button from '../../components/Button/button';
+import Header from '../../components/Header/header';
+
+import globalStyle from '../../assets/styles/globalStyle';
 
 
 const Login: React.FC = () => {
@@ -12,68 +18,68 @@ const Login: React.FC = () => {
     // Add your login logic here
     console.log('Username:', username);
     console.log('Password:', password);
-    if(username == "susan" || username == "khizer" || username == "shoaib"){
-      navigation.navigate('Home', { username: username });
-    }
+    if(username === "susan" || username === "khizer" || username === "shoaib"){
+          navigation.navigate('Home', { username: username });
+        }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={text => setUsername(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={text => setPassword(text)}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={styles.container}>
+    <View style={globalStyle.marginBottom24}>
+      <Header title={'Welcome Back!'} type={1}/>
+      </View>
+      <View style={globalStyle.marginBottom24}>
+      <Input
+           label="Username"
+           placeholder="Enter your username"
+           onChangeText={(value)=>{setUsername(value)}}
+           keyboardType="email-address"
+           />
+           </View>
+            <View style={globalStyle.marginBottom24}>
+    <Input
+           label="Password"
+           placeholder="*******"
+           onChangeText={(value)=>{setPassword(value)}}
+           secureTextEntry = {true}
+               />
+               </View>
+    <View style={globalStyle.marginBottom24}>
+      <Button
+      isDisabled = {username.length <3 || password.length <5}
+      handlePress={handleLogin}
+      title={'Login'}/>
+
+      </View>
+
+        <Pressable style={styles.registrationButton} onPress={()=>navigation.navigate('Registration')}>
+        <Text>Don't have an account? Sign Up!</Text>
+        </Pressable>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffffff',
-  },
+
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20,
-  },
-  button: {
-    width: '80%',
-    height: 40,
-    backgroundColor: '#007bff',
+    marginBottom: 24,
+    alignItems:'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
+    color:''
   },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
+  container: {
+      flex: 1,
+      marginHorizontal: 24,
+      justifyContent: 'center',
+      //alignItems: 'center',
+      backgroundColor: '#ffffff',
+    },
+    registrationButton:{
+    alignItems: 'center',
+    }
+    });
+ 
 export default Login;
